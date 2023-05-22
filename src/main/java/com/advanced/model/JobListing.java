@@ -11,22 +11,22 @@ public class JobListing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @ApiModelProperty(value = "Job ID", example = "5")
+    @ApiModelProperty(value = "Job ID", example = "5", position = 1)
     private Long id;
 
-    @ApiModelProperty(value = "Job Title", example = "Software Engineer")
+    @ApiModelProperty(value = "Job Title", example = "Software Engineer", position = 2)
     private String jobTitle;
 
-    @ApiModelProperty(value = "Job Description", example = "We are looking for a software engineer to join our team.")
+    @ApiModelProperty(value = "Job Description", example = "We are looking for a software engineer to join our team.", position = 3)
     private String description;
 
-    @ApiModelProperty(value = "Job Requirements", example = "Must have 5 years of experience in Java.")
+    @ApiModelProperty(value = "Job Requirements", example = "Must have 5 years of experience in Java.", position = 4)
     private String requirements;
 
-    @ApiModelProperty(value = "Job Location", example = "Nablus")
+    @ApiModelProperty(value = "Job Location", example = "Nablus", position = 5)
     private String location;
 
-    @ApiModelProperty(value = "Salary Range", example = "100,000 NIS - 120,000 NIS")
+    @ApiModelProperty(value = "Salary Range", example = "9000-12000 $", position = 6)
     private String salaryRange;
 
     public JobListing() {
