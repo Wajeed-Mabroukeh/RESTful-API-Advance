@@ -19,19 +19,19 @@ public class JobApplication {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private JobListing jobListing;
     
-    @ApiModelProperty(value = "Job ID", example = "5")
+    @ApiModelProperty(value = "Job ID", example = "5", position = 1)
     private Long jobId;
 
-    @ApiModelProperty(value = "Applicant Name", example = "Wajeed Mabroukeh")
+    @ApiModelProperty(value = "Applicant Name", example = "Wajeed Mabroukeh", position = 2)
     private String applicantName;
 
-    @ApiModelProperty(value = "Applicant Email", example = "wajeed.mabroukeh@gmail.com")
+    @ApiModelProperty(value = "Applicant Email", example = "wajeed.mabroukeh@gmail.com", position = 3)
     private String applicantEmail;
 
-    @ApiModelProperty(value = "Resume URL", example = "https://www.linkedin.com/in/wajeed-mabroukeh")
+    @ApiModelProperty(value = "Resume URL", example = "https://www.linkedin.com/in/wajeed-mabroukeh", position = 4)
     private String resumeUrl;
 
-    @ApiModelProperty(value = "Cover Letter", example = "I am a software engineer with 5 years of experience.")
+    @ApiModelProperty(value = "Cover Letter", example = "I am a software engineer with 5 years of experience.", position = 5)
     private String coverLetter;
 
     public JobApplication() {
@@ -101,3 +101,4 @@ public class JobApplication {
         this.jobId = jobId;
     }
 }
+

@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Example;
 import io.swagger.annotations.ExampleProperty;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,15 +115,17 @@ public class JobApplicationController {
     @ApiOperation("Deletes a job application.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully deleted", examples = @Example(value = {
-                    @ExampleProperty(value = "Job application with ID 5 was deleted.", mediaType = "*/*")
+                    @ExampleProperty(value = "{\n  \"message\": \"Job application with ID 5 was deleted.\"\n}", mediaType = "*/*")
             })),
             @ApiResponse(code = 404, message = "Not Found")
     })
-    public String deleteById(
+    public HashMap<String, String> deleteById(
             @ApiParam(value = "Enter the application ID you want to delete", example = "5") @PathVariable Long id) {
         try {
             jobApplicationService.deleteById(id);
-            return "Job application with ID " + id + " was deleted.";
+            HashMap<String, String> map = new HashMap<>();
+            map.put("message", "Job application with ID " + id + " was deleted.");
+            return map;
         } catch (Exception e) {
             throw new IllegalArgumentException("Job application with ID " + id + " does not exist.");
         }
