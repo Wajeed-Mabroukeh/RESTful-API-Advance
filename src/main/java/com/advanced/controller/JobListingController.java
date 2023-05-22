@@ -1,5 +1,8 @@
+
 package com.advanced.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +60,7 @@ public class JobListingController {
         if (jobListing.getJobTitle() == null || jobListing.getDescription() == null ||
                 jobListing.getLocation() == null || jobListing.getRequirements() == null
                 || jobListing.getSalaryRange() == null) {
-            throw new NullPointerException("Job listing details are required.");
+            throw new NullPointerException("All details are required.");
         }
 
         return jobListingService.save(jobListing);
@@ -76,7 +79,7 @@ public class JobListingController {
         if (jobListing.getJobTitle() == null || jobListing.getDescription() == null ||
                 jobListing.getLocation() == null || jobListing.getRequirements() == null
                 || jobListing.getSalaryRange() == null) {
-            throw new NullPointerException("Job listing details are required.");
+            throw new NullPointerException("All details are required.");
         }
 
         if (jobListingService.findById(id) == null) {
@@ -89,17 +92,19 @@ public class JobListingController {
 
     @ApiOperation("Deletes a job listing.")
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully deleted", examples = @Example(value = {
-                @ExampleProperty(value = "Job listing with ID 5 was deleted.", mediaType = "*/*")
-        })),
-        @ApiResponse(code = 404, message = "Not Found")
-})
+            @ApiResponse(code = 200, message = "Successfully deleted", examples = @Example(value = {
+                    @ExampleProperty(value = "{\n  \"message\": \"Job listing with ID 5 was deleted.\"\n}", mediaType = "*/*")
+            })),
+            @ApiResponse(code = 404, message = "Not Found")
+    })
     @DeleteMapping("/{id}")
-    public String deleteById(
+    public HashMap<String, String> deleteById(
             @ApiParam(value = "Enter the job ID you want to delete", example = "5") @PathVariable Long id) {
         try {
             jobListingService.deleteById(id);
-            return "Job listing with ID " + id + " was deleted.";
+            HashMap<String, String> map = new HashMap<>();
+            map.put("message", "Job listing with ID " + id + " was deleted.");
+            return map;
         } catch (Exception e) {
             throw new IllegalArgumentException("Job listing with ID " + id + " does not exist.");
         }
@@ -118,4 +123,15 @@ public class JobListingController {
         }
         return jobListings;
     }
+
+    @ApiOperation("Retrieves all job listings in EUR.")
+    @ApiResponse(code = 200, message = "Successfully retrieved", examples = @Example(value = {
+        @ExampleProperty(value = "[\n  {\n    \"id\": 5,\n    \"jobTitle\": \"Software Engineer\",\n    \"description\": \"We are looking for a software engineer to join our team.\",\n    \"requirements\": \"Must have 5 years of experience in Java.\",\n    \"location\": \"Nablus\",\n    \"salaryRange\": \"8320.797-11094.396 €\"\n  }\n]", mediaType = "*/*")
+    }))      
+    @GetMapping("/EUR")
+    public List<JobListing> findAllUSD() throws NumberFormatException, IOException {
+        return jobListingService.findAllUSD();
+    }
 }
+
+
