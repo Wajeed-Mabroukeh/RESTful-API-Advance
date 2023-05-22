@@ -1,17 +1,32 @@
 package com.advanced.model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 public class JobListing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @ApiModelProperty(value = "Job ID", example = "5")
     private Long id;
 
+    @ApiModelProperty(value = "Job Title", example = "Software Engineer")
     private String jobTitle;
+
+    @ApiModelProperty(value = "Job Description", example = "We are looking for a software engineer to join our team.")
     private String description;
+
+    @ApiModelProperty(value = "Job Requirements", example = "Must have 5 years of experience in Java.")
     private String requirements;
+
+    @ApiModelProperty(value = "Job Location", example = "Nablus")
     private String location;
+
+    @ApiModelProperty(value = "Salary Range", example = "100,000 NIS - 120,000 NIS")
     private String salaryRange;
 
     public JobListing() {
