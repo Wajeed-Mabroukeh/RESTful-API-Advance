@@ -36,4 +36,5 @@ public class ExchangeRateResponse {
     public Double getRates(String currency) {
         return rates.get(currency);
     }
+
 }
