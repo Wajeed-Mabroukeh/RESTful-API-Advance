@@ -101,4 +101,3 @@ public class JobApplication {
         this.jobId = jobId;
     }
 }
-
