@@ -1,8 +1,6 @@
 package com.advanced.service;
 
-import java.io.BufferedReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,8 @@ import com.advanced.model.JobListing;
 
 @Service
 public class JobListingService {
+    ExchangeRateService exchangeRateService = new ExchangeRateService();
+
     @Autowired
     private JobListingRepository jobListingRepository;
 
@@ -60,7 +60,26 @@ public class JobListingService {
         }
     }
 
+    public List<JobListing> findAllUSD() throws NumberFormatException, IOException {
+        List<JobListing> list = jobListingRepository.findAll();
+        for (JobListing index : list) {
+            index.setSalaryRange(convertToEUR(index.getSalaryRange()));
+        }
+        return list;
+    }
 
-
-   
+    public String convertToEUR(String SalaryRange) throws NumberFormatException, IOException {
+        String total = "";
+        SalaryRange = SalaryRange.replace(" ", "");
+        SalaryRange = SalaryRange.replace("$", "");
+        String[] split = SalaryRange.split("-");
+        for (int i = 0; i < split.length; i++) {
+            if (i == 1) {
+                total += "-";
+            }
+            total += (Integer.parseInt(split[i]) * exchangeRateService.getExchangeRate("EUR")) + "";
+        }
+        total += " €";
+        return total;
+    }
 }
