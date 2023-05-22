@@ -1,3 +1,4 @@
+
 package com.advanced.controller;
 
 import java.io.IOException;
@@ -132,3 +133,5 @@ public class JobListingController {
         return jobListingService.findAllUSD();
     }
 }
+
+
